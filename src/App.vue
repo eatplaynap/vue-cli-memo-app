@@ -1,18 +1,14 @@
 <template>
   <h1>All Memos</h1>
   <ul>
-    <li>Memo1</li>
-    <li>Memo2</li>
-    <li>Memo3</li>
+    <li v-for="(memo, index) in memos" :key="index">{{ memo }}</li>
   </ul>
   <button>+</button>
-  <form>
+  <form  @submit.prevent="addMemo">
     <label>Edit:</label>
-    <input type="text">
-    <span class="buttons">
-      <button type="submit">Add</button>
-      <button>Delete</button>
-    </span>
+    <input type="text" v-model="newMemo">
+    <button type="submit">Add</button>
+    <button>Delete</button>
   </form>
 
 </template>
@@ -21,7 +17,19 @@
 
 export default {
   name: 'App',
-  components: {
+  components: {},
+  data() {
+    return {
+      memos: [],
+      newMemo: undefined
+    }
+  },
+  methods: {
+    addMemo()
+    {
+      this.memos.push(this.newMemo)
+      this.newMemo = undefined
+    }
   }
 }
 </script>
