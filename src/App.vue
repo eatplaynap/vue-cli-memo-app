@@ -50,10 +50,10 @@ export default {
       this.editIndex = null
     },
     deleteMemo() {
-      console.log('reached here')
+      this.memos.splice(this.editIndex, 1)
+      this.cancel()
     },
     editMemo(index){
-      console.log('reached here')
       this.editIndex = index
       this.newMemo = this.memos[index]
     }
