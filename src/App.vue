@@ -1,12 +1,12 @@
 <template>
   <h1>All Memos</h1>
   <ul>
-    <li v-for="(memo, index) in memos" :key="index" @click="editMemo(index)">{{ memo }}</li>
+    <li v-for="(memo, index) in memos" :key="memo.id" @click="editMemo(index)">{{ memo.title }}</li>
   </ul>
-  <button>+</button>
+  <button @click="setMemo">+</button>
   <form  @submit.prevent="setMemo">
     <label>Edit:</label>
-    <input type="text" v-model="newMemo">
+    <input text="text" v-model="newMemo">
     <button type="submit">Add</button>
   </form>
   <button @click="deleteMemo">Delete</button>
@@ -38,8 +38,13 @@ export default {
   },
   methods: {
     setMemo() {
+      const value = this.newMemo
       if(this.editIndex === null) {
-        this.memos.push(this.newMemo)
+        this.memos.push({
+          id: this.memos.length + 1,
+          title: value.split('\n')[0],
+          content: value
+        })
       } else {
         this.memos.splice(this.editIndex, 1, this.newMemo)
       }
@@ -55,7 +60,7 @@ export default {
     },
     editMemo(index){
       this.editIndex = index
-      this.newMemo = this.memos[index]
+      this.newMemo = this.memos[index].content
     }
   }
 }
