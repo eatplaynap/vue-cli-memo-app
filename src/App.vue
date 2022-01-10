@@ -1,10 +1,10 @@
 <template>
   <h1>All Memos</h1>
   <ul>
-    <li v-for="(memo, index) in memos" :key="index">{{ memo }}</li>
+    <li v-for="(memo, index) in memos" :key="index" @click="editMemo(index)">{{ memo }}</li>
   </ul>
   <button>+</button>
-  <form  @submit.prevent="addMemo">
+  <form  @submit.prevent="setMemo">
     <label>Edit:</label>
     <input type="text" v-model="newMemo">
     <button type="submit">Add</button>
@@ -21,7 +21,8 @@ export default {
   data() {
     return {
       memos: [],
-      newMemo: undefined
+      newMemo: undefined,
+      editIndex: null
     }
   },
   watch: {
@@ -36,13 +37,25 @@ export default {
     this.memos = JSON.parse(localStorage.getItem('memos')) || []
   },
   methods: {
-    addMemo()
-    {
-      this.memos.push(this.newMemo)
+    setMemo() {
+      if(this.editIndex === null) {
+        this.memos.push(this.newMemo)
+      } else {
+        this.memos.splice(this.editIndex, 1, this.newMemo)
+      }
+      this.cancel()
+    },
+    cancel() {
       this.newMemo = undefined
+      this.editIndex = null
     },
     deleteMemo() {
       console.log('reached here')
+    },
+    editMemo(index){
+      console.log('reached here')
+      this.editIndex = index
+      this.newMemo = this.memos[index]
     }
   }
 }
