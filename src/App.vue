@@ -8,8 +8,8 @@
     <label>Edit:</label>
     <input type="text" v-model="newMemo">
     <button type="submit">Add</button>
-    <button>Delete</button>
   </form>
+  <button @click="deleteMemo">Delete</button>
 
 </template>
 
@@ -24,11 +24,25 @@ export default {
       newMemo: undefined
     }
   },
+  watch: {
+    memos: {
+      handler(memos) {
+        localStorage.setItem('memos', JSON.stringify(this.memos))
+      },
+      deep: true
+    }
+  },
+  mounted() {
+    this.memos = JSON.parse(localStorage.getItem('memos')) || []
+  },
   methods: {
     addMemo()
     {
       this.memos.push(this.newMemo)
       this.newMemo = undefined
+    },
+    deleteMemo() {
+      console.log('reached here')
     }
   }
 }
