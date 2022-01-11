@@ -6,7 +6,7 @@
   <button @click="setMemo">+</button>
   <form  @submit.prevent="setMemo">
     <label>Edit:</label>
-    <input text="text" v-model="newMemo">
+    <textarea v-model="newMemo"></textarea>
     <button type="submit">Add</button>
   </form>
   <button @click="deleteMemo">Delete</button>
@@ -22,7 +22,8 @@ export default {
     return {
       memos: [],
       newMemo: undefined,
-      editIndex: null
+      editIndex: null,
+      nextId: 0
     }
   },
   watch: {
@@ -38,15 +39,20 @@ export default {
   },
   methods: {
     setMemo() {
-      const value = this.newMemo
+      const memo = this.newMemo
       if(this.editIndex === null) {
         this.memos.push({
-          id: this.memos.length + 1,
-          title: value.split('\n')[0],
-          content: value
+          id: this.nextId++,
+          title: memo.split('\n')[0],
+          content: memo
         })
+        console.log(this.memos[0].id)
       } else {
-        this.memos.splice(this.editIndex, 1, this.newMemo)
+        this.memos.splice(this.editIndex, 1, {
+          id: this.memos[this.editIndex].id,
+          title: memo.split('\n')[0],
+          content: memo
+        })
       }
       this.cancel()
     },
@@ -58,7 +64,7 @@ export default {
       this.memos.splice(this.editIndex, 1)
       this.cancel()
     },
-    editMemo(index){
+    editMemo(index) {
       this.editIndex = index
       this.newMemo = this.memos[index].content
     }
