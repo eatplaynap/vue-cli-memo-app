@@ -1,16 +1,21 @@
 <template>
   <h1>All Memos</h1>
   <ul>
-    <li v-for="(memo, index) in memos" :key="memo.id" @click="editMemo(index)">{{ memo.title }}</li>
+    <li v-for="(memo, index) in memos" :key="memo.id" @click="editMemo(index)">{{ memo.content?.split('\n')[0] || null }}</li>
   </ul>
-  <button @click="setMemo">+</button>
-  <form  @submit.prevent="setMemo">
-    <label>Edit:</label>
+  <button @click="addMemo">+</button>
+  <form v-if="!editIndex" @submit.prevent="setMemo">
+    <label>Add:</label>
     <textarea v-model="newMemo"></textarea>
     <button type="submit">Add</button>
   </form>
-  <button @click="deleteMemo">Delete</button>
 
+  <form v-else @submit.prevent="setMemo">
+    <label>Edit:</label>
+    <textarea v-model="newMemo"></textarea>
+    <button type="submit">Edit</button>
+    <button @click="deleteMemo()">Delete</button>
+  </form>
 </template>
 
 <script>
