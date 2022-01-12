@@ -4,18 +4,23 @@
     <li v-for="(memo, index) in memos" :key="memo.id" @click="editMemo(index)">{{ memo.content?.split('\n')[0] || null }}</li>
   </ul>
   <button @click="addMemo">+</button>
-  <form v-if="!editIndex" @submit.prevent="setMemo">
-    <label>Add:</label>
-    <textarea v-model="newMemo"></textarea>
-    <button type="submit">Add</button>
-  </form>
+  <div v-if="!editIndex">
+    <form @submit.prevent="addMemo">
+      <label>Add:</label>
+      <textarea v-model="newMemo"></textarea>
+      <button type="submit">Add</button>
+    </form>
+  </div>
 
-  <form v-else @submit.prevent="setMemo">
-    <label>Edit:</label>
-    <textarea v-model="newMemo"></textarea>
-    <button type="submit">Edit</button>
-    <button @click="deleteMemo()">Delete</button>
-  </form>
+  <div v-else>
+    <form @submit.prevent="doneEdit">
+      <label>Edit:</label>
+      <textarea v-model="newMemo"></textarea>
+      <button type="submit">Edit</button>
+    </form>
+    <button @click="deleteMemo">Delete</button>
+  </div>
+
 </template>
 
 <script>
