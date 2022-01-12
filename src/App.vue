@@ -61,7 +61,6 @@ export default {
       } else {
         this.memos.splice(this.editIndex, 1, {
           id: this.memos[this.editIndex].id,
-          title: memo.split('\n')[0],
           content: memo
         })
       }
