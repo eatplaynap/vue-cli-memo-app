@@ -44,6 +44,12 @@ export default {
     this.nextId = this.memos[this.memos.length-1]?.id || 0
   },
   methods: {
+    addMemo() {
+      this.memos.push({
+        id: ++this.nextId,
+        content: '新規メモ'
+      })
+    },
     setMemo() {
       const memo = this.newMemo
       if(this.editIndex === null) {
