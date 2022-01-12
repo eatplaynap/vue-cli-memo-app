@@ -1,11 +1,14 @@
 <template>
   <h1>All Memos</h1>
   <ul>
-    <li v-for="(memo, index) in memos" :key="memo.id" @click="editMemo(index)">{{ memo.content?.split('\n')[0] || null }}</li>
+    <li v-for="(memo, index) in memos" :key="memo.id" @click="editMemo(index)">{{
+        memo.content?.split('\n')[0] || null
+      }}
+    </li>
   </ul>
   <button @click="addMemo">+</button>
-  <div v-if="!editIndex">
-    <form @submit.prevent="addMemo">
+  <div v-if="editIndex === null" v-show="isEditing">
+    <form @submit.prevent="doneAddMemo">
       <label>Add:</label>
       <textarea v-model="newMemo"></textarea>
       <button type="submit">Add</button>
@@ -33,7 +36,8 @@ export default {
       memos: [],
       newMemo: undefined,
       editIndex: null,
-      nextId: undefined
+      nextId: undefined,
+      isEditing: false
     }
   },
   watch: {
@@ -46,21 +50,29 @@ export default {
   },
   mounted() {
     this.memos = JSON.parse(localStorage.getItem('memos')) || []
-    this.nextId = this.memos[this.memos.length-1]?.id || 0
+    this.nextId = this.memos[this.memos.length - 1]?.id || 0
   },
   methods: {
     addMemo() {
-      if(this.editIndex === null){
-        this.memos.push({
-          id: ++this.nextId,
-          content: '新規メモ'
-        })
-      }
+      this.isEditing = true
+      this.memos.push({
+        id: ++this.nextId,
+        content: '新規メモ'
+      })
+      this.newMemo = this.memos[this.memos.length - 1].content
+    },
+    doneAddMemo() {
+      const index = this.memos.findIndex((memo) => memo.id === this.memos[this.memos.length - 1].id)
+      this.memos.splice(index, 1, {
+        id: this.memos[this.memos.length -1].id,
+        content: this.newMemo
+      })
       this.cancel()
     },
     cancel() {
       this.newMemo = undefined
       this.editIndex = null
+      this.isEditing = false
     },
     deleteMemo() {
       if (this.editIndex !== null) {
