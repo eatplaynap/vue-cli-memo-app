@@ -61,8 +61,10 @@ export default {
       this.editIndex = null
     },
     deleteMemo() {
-      this.memos.splice(this.editIndex, 1)
-      this.cancel()
+      if (this.editIndex !== null) {
+        this.memos.splice(this.editIndex, 1)
+        this.cancel()
+      }
     },
     editMemo(index) {
       this.editIndex = index
