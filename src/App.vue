@@ -28,7 +28,7 @@ export default {
       memos: [],
       newMemo: undefined,
       editIndex: null,
-      nextId: 0
+      nextId: undefined
     }
   },
   watch: {
@@ -41,14 +41,14 @@ export default {
   },
   mounted() {
     this.memos = JSON.parse(localStorage.getItem('memos')) || []
+    this.nextId = this.memos[this.memos.length-1]?.id || 0
   },
   methods: {
     setMemo() {
       const memo = this.newMemo
       if(this.editIndex === null) {
         this.memos.push({
-          id: this.nextId++,
-          title: memo.split('\n')[0],
+          id: ++this.nextId,
           content: memo
         })
         console.log(this.memos[0].id)
