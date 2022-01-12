@@ -57,7 +57,6 @@ export default {
           id: ++this.nextId,
           content: memo
         })
-        console.log(this.memos[0].id)
       } else {
         this.memos.splice(this.editIndex, 1, {
           id: this.memos[this.editIndex].id,
