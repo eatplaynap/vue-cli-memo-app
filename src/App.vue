@@ -45,22 +45,10 @@ export default {
   },
   methods: {
     addMemo() {
-      this.memos.push({
-        id: ++this.nextId,
-        content: '新規メモ'
-      })
-    },
-    setMemo() {
-      const memo = this.newMemo
-      if(this.editIndex === null) {
+      if(this.editIndex === null){
         this.memos.push({
           id: ++this.nextId,
-          content: memo
-        })
-      } else {
-        this.memos.splice(this.editIndex, 1, {
-          id: this.memos[this.editIndex].id,
-          content: memo
+          content: '新規メモ'
         })
       }
       this.cancel()
@@ -78,6 +66,13 @@ export default {
     editMemo(index) {
       this.editIndex = index
       this.newMemo = this.memos[index].content
+    },
+    doneEdit() {
+      this.memos.splice(this.editIndex, 1, {
+        id: this.memos[this.editIndex].id,
+        content: this.newMemo
+      })
+      this.cancel()
     }
   }
 }
