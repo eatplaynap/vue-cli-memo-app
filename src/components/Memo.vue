@@ -36,14 +36,6 @@ export default {
       isEditing: false
     }
   },
-  watch: {
-    memos: {
-      handler(memos) {
-        localStorage.setItem('memos', JSON.stringify(this.memos))
-      },
-      deep: true
-    }
-  },
   mounted() {
     this.memos = JSON.parse(localStorage.getItem('memos')) || []
     this.nextId = this.memos[this.memos.length - 1]?.id || 0
@@ -63,6 +55,7 @@ export default {
         id: this.memos[this.memos.length -1].id,
         content: this.newMemo
       })
+      localStorage.setItem('memos', JSON.stringify(this.memos))
       this.$_cancel()
     },
     $_cancel() {
@@ -73,6 +66,7 @@ export default {
     destroy() {
       if (this.editIndex !== null) {
         this.memos.splice(this.editIndex, 1)
+        localStorage.setItem('memos', JSON.stringify(this.memos))
         this.$_cancel()
       }
     },
@@ -85,6 +79,7 @@ export default {
         id: this.memos[this.editIndex].id,
         content: this.newMemo
       })
+      localStorage.setItem('memos', JSON.stringify(this.memos))
       this.$_cancel()
     }
   }
