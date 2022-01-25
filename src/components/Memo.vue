@@ -32,19 +32,22 @@ export default {
       memos: [],
       newMemo: undefined,
       editIndex: null,
-      nextId: undefined,
       isEditing: false
     }
   },
   mounted() {
     this.memos = JSON.parse(localStorage.getItem('memos')) || []
-    this.nextId = this.memos[this.memos.length - 1]?.id || 0
+  },
+  computed: {
+    nextId() {
+      return (this.memos[this.memos.length - 1]?.id || 0) + 1
+    }
   },
   methods: {
     add() {
       this.isEditing = true
       this.memos.push({
-        id: ++this.nextId,
+        id: this.nextId,
         content: '新規メモ'
       })
       this.newMemo = this.memos[this.memos.length - 1].content
