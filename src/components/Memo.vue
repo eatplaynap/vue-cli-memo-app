@@ -1,14 +1,14 @@
 <template>
   <h1>All Memos</h1>
   <ul>
-    <li v-for="(memo, index) in memos" :key="memo.id" @click="editMemo(index)">{{
+    <li v-for="(memo, index) in memos" :key="memo.id" @click="edit(index)">{{
         memo.content?.split('\n')[0] || null
       }}
     </li>
   </ul>
-  <button @click="addMemo">+</button>
+  <button @click="add">+</button>
   <div v-if="editIndex === null" v-show="isEditing">
-    <form @submit.prevent="doneAddMemo">
+    <form @submit.prevent="create">
       <label>Add:</label>
       <textarea v-model="newMemo"></textarea>
       <button type="submit">Add</button>
@@ -16,12 +16,12 @@
   </div>
 
   <div v-else>
-    <form @submit.prevent="doneEdit">
+    <form @submit.prevent="update">
       <label>Edit:</label>
       <textarea v-model="newMemo"></textarea>
       <button type="submit">Edit</button>
     </form>
-    <button @click="deleteMemo">Delete</button>
+    <button @click="destroy">Delete</button>
   </div>
 </template>
 
@@ -49,7 +49,7 @@ export default {
     this.nextId = this.memos[this.memos.length - 1]?.id || 0
   },
   methods: {
-    addMemo() {
+    add() {
       this.isEditing = true
       this.memos.push({
         id: ++this.nextId,
@@ -57,7 +57,7 @@ export default {
       })
       this.newMemo = this.memos[this.memos.length - 1].content
     },
-    doneAddMemo() {
+    create() {
       const index = this.memos.findIndex((memo) => memo.id === this.memos[this.memos.length - 1].id)
       this.memos.splice(index, 1, {
         id: this.memos[this.memos.length -1].id,
@@ -70,17 +70,17 @@ export default {
       this.editIndex = null
       this.isEditing = false
     },
-    deleteMemo() {
+    destroy() {
       if (this.editIndex !== null) {
         this.memos.splice(this.editIndex, 1)
         this.cancel()
       }
     },
-    editMemo(index) {
+    edit(index) {
       this.editIndex = index
       this.newMemo = this.memos[index].content
     },
-    doneEdit() {
+    update() {
       this.memos.splice(this.editIndex, 1, {
         id: this.memos[this.editIndex].id,
         content: this.newMemo
