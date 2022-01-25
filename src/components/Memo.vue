@@ -63,9 +63,9 @@ export default {
         id: this.memos[this.memos.length -1].id,
         content: this.newMemo
       })
-      this.cancel()
+      this.$_cancel()
     },
-    cancel() {
+    $_cancel() {
       this.newMemo = undefined
       this.editIndex = null
       this.isEditing = false
@@ -73,7 +73,7 @@ export default {
     destroy() {
       if (this.editIndex !== null) {
         this.memos.splice(this.editIndex, 1)
-        this.cancel()
+        this.$_cancel()
       }
     },
     edit(index) {
@@ -85,7 +85,7 @@ export default {
         id: this.memos[this.editIndex].id,
         content: this.newMemo
       })
-      this.cancel()
+      this.$_cancel()
     }
   }
 }
