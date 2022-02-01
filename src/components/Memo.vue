@@ -52,17 +52,11 @@ export default {
   methods: {
     add() {
       this.editIndex = this.memos.length
-      console.log('reached here')
-      this.memos.push({
-        id: this.nextId,
-        content: '新規メモ'
-      })
-      this.newMemo = this.memos[this.memos.length - 1].content
+      this.newMemo =  '新規メモ'
     },
     create() {
-      const index = this.memos.findIndex((memo) => memo.id === this.memos[this.memos.length - 1].id)
-      this.memos.splice(index, 1, {
-        id: this.memos[this.memos.length -1].id,
+      this.memos.push({
+        id: this.nextId,
         content: this.newMemo
       })
       localStorage.setItem('memos', JSON.stringify(this.memos))
