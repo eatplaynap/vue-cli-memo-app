@@ -7,7 +7,7 @@
     </li>
   </ul>
   <button @click="add">+</button>
-  <div v-if="editIndex === null" v-show="isEditing">
+  <div v-if="isEditing">
     <form @submit.prevent="create">
       <label>Add:</label>
       <textarea v-model="newMemo"></textarea>
@@ -15,7 +15,7 @@
     </form>
   </div>
 
-  <div v-else>
+  <div v-else-if="isUpdating">
     <form @submit.prevent="update">
       <label>Edit:</label>
       <textarea v-model="newMemo"></textarea>
@@ -32,7 +32,7 @@ export default {
       memos: [],
       newMemo: undefined,
       editIndex: null,
-      isEditing: false
+      updateIndex: null
     }
   },
   mounted() {
@@ -41,11 +41,18 @@ export default {
   computed: {
     nextId() {
       return (this.memos[this.memos.length - 1]?.id || 0) + 1
+    },
+    isEditing() {
+      return Boolean(this.editIndex)
+    },
+    isUpdating() {
+      return Boolean(this.updateIndex)
     }
   },
   methods: {
     add() {
-      this.isEditing = true
+      this.editIndex = this.memos.length
+      console.log('reached here')
       this.memos.push({
         id: this.nextId,
         content: '新規メモ'
@@ -64,22 +71,22 @@ export default {
     $_cancel() {
       this.newMemo = undefined
       this.editIndex = null
-      this.isEditing = false
+      this.updateIndex = null
     },
     destroy() {
-      if (this.editIndex !== null) {
-        this.memos.splice(this.editIndex, 1)
+      if (this.updateIndex !== null) {
+        this.memos.splice(this.updateIndex, 1)
         localStorage.setItem('memos', JSON.stringify(this.memos))
         this.$_cancel()
       }
     },
     edit(index) {
-      this.editIndex = index
+      this.updateIndex = index
       this.newMemo = this.memos[index].content
     },
     update() {
-      this.memos.splice(this.editIndex, 1, {
-        id: this.memos[this.editIndex].id,
+      this.memos.splice(this.updateIndex, 1, {
+        id: this.memos[this.updateIndex].id,
         content: this.newMemo
       })
       localStorage.setItem('memos', JSON.stringify(this.memos))
