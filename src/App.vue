@@ -1,12 +1,12 @@
 <template>
-  <Memo />
+  <MemoItem />
 </template>
 
 <script>
-import Memo from './components/Memo.vue'
+import MemoItem from './components/MemoItem.vue'
 export default {
   name: 'App',
-  components: { Memo }
+  components: { MemoItem }
 }
 
 </script>
