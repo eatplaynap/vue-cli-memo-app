@@ -31,8 +31,7 @@ export default {
     return {
       memos: [],
       newMemo: undefined,
-      updateIndex: null,
-      isDisplayingNewForm: false
+      selectedIndex: null
     }
   },
   mounted() {
@@ -42,13 +41,16 @@ export default {
     nextId() {
       return (this.memos[this.memos.length - 1]?.id || 0) + 1
     },
+    isDisplayingNewForm() {
+      return this.selectedIndex === -1
+    },
     isDisplayingEditingForm() {
-      return Boolean(this.updateIndex)
+      return this.selectedIndex > 0
     }
   },
   methods: {
     add() {
-      this.isDisplayingNewForm = true
+      this.selectedIndex = -1
       this.newMemo =  '新規メモ'
     },
     create() {
@@ -61,23 +63,22 @@ export default {
     },
     $_cancel() {
       this.newMemo = undefined
-      this.isDisplayingNewForm = false
-      this.updateIndex = null
+      this.selectedIndex = null
     },
     destroy() {
-      if (this.updateIndex !== null) {
-        this.memos.splice(this.updateIndex, 1)
+      if (this.selectedIndex !== null) {
+        this.memos.splice(this.selectedIndex, 1)
         localStorage.setItem('memos', JSON.stringify(this.memos))
         this.$_cancel()
       }
     },
     edit(index) {
-      this.updateIndex = index
+      this.selectedIndex = index
       this.newMemo = this.memos[index].content
     },
     update() {
-      this.memos.splice(this.updateIndex, 1, {
-        id: this.memos[this.updateIndex].id,
+      this.memos.splice(this.selectedIndex, 1, {
+        id: this.memos[this.selectedIndex].id,
         content: this.newMemo
       })
       localStorage.setItem('memos', JSON.stringify(this.memos))
