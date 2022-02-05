@@ -31,7 +31,6 @@ export default {
     return {
       memos: [],
       newMemo: undefined,
-      editIndex: null,
       updateIndex: null,
       isDisplayingNewForm: false
     }
