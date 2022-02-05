@@ -1,19 +1,14 @@
 # vue-cli-memo-app
+This is a Memo App created with VueCLI.
+You can create, update and delete your memo. 
 
-## Project setup
-```
-npm install
-```
+## How it works
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Adding a new memo
+[![Image from Gyazo](https://i.gyazo.com/c181abbbd4fed7bbab83438d2ed4d44a.gif)](https://gyazo.com/c181abbbd4fed7bbab83438d2ed4d44a)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Editing an existing memo
+[![Image from Gyazo](https://i.gyazo.com/66e6cab8e50fcc5c42c2222177372fd8.gif)](https://gyazo.com/66e6cab8e50fcc5c42c2222177372fd8)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Deleting a memo
+[![Image from Gyazo](https://i.gyazo.com/17b8c6f576633e2bc2a78accf0cc39cf.gif)](https://gyazo.com/17b8c6f576633e2bc2a78accf0cc39cf)
