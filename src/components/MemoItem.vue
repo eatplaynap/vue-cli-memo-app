@@ -15,7 +15,7 @@
     </form>
   </div>
 
-  <div v-else-if="isUpdating">
+  <div v-if="isDisplayingEditingForm">
     <form @submit.prevent="update">
       <label>Edit:</label>
       <textarea v-model="newMemo"></textarea>
@@ -43,7 +43,7 @@ export default {
     nextId() {
       return (this.memos[this.memos.length - 1]?.id || 0) + 1
     },
-    isUpdating() {
+    isDisplayingEditingForm() {
       return Boolean(this.updateIndex)
     }
   },
