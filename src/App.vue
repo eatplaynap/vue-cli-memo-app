@@ -1,17 +1,14 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <MemoItem />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import MemoItem from './components/MemoItem.vue'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: { MemoItem }
 }
+
 </script>
 
 <style>
@@ -23,4 +20,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
 </style>
