@@ -7,7 +7,7 @@
     </li>
   </ul>
   <button @click="add">+</button>
-  <div v-if="isEditing">
+  <div v-if="isDisplayingNewForm">
     <form @submit.prevent="create">
       <label>Add:</label>
       <textarea v-model="newMemo"></textarea>
@@ -42,7 +42,7 @@ export default {
     nextId() {
       return (this.memos[this.memos.length - 1]?.id || 0) + 1
     },
-    isEditing() {
+    isDisplayingNewForm() {
       return Boolean(this.editIndex)
     },
     isUpdating() {
