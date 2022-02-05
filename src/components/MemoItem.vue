@@ -32,7 +32,8 @@ export default {
       memos: [],
       newMemo: undefined,
       editIndex: null,
-      updateIndex: null
+      updateIndex: null,
+      isDisplayingNewForm: false
     }
   },
   mounted() {
@@ -42,16 +43,13 @@ export default {
     nextId() {
       return (this.memos[this.memos.length - 1]?.id || 0) + 1
     },
-    isDisplayingNewForm() {
-      return Boolean(this.editIndex)
-    },
     isUpdating() {
       return Boolean(this.updateIndex)
     }
   },
   methods: {
     add() {
-      this.editIndex = this.memos.length
+      this.isDisplayingNewForm = true
       this.newMemo =  '新規メモ'
     },
     create() {
@@ -64,7 +62,7 @@ export default {
     },
     $_cancel() {
       this.newMemo = undefined
-      this.editIndex = null
+      this.isDisplayingNewForm = false
       this.updateIndex = null
     },
     destroy() {
