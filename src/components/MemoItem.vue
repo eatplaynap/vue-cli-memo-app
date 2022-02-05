@@ -31,7 +31,7 @@ export default {
     return {
       memos: [],
       newMemo: undefined,
-      selectedIndex: null
+      selectedIndex: undefined
     }
   },
   mounted() {
@@ -45,7 +45,7 @@ export default {
       return this.selectedIndex === -1
     },
     isDisplayingEditingForm() {
-      return this.selectedIndex > 0
+      return this.selectedIndex >= 0
     }
   },
   methods: {
@@ -63,10 +63,10 @@ export default {
     },
     $_cancel() {
       this.newMemo = undefined
-      this.selectedIndex = null
+      this.selectedIndex = undefined
     },
     destroy() {
-      if (this.selectedIndex !== null) {
+      if (this.selectedIndex !== undefined) {
         this.memos.splice(this.selectedIndex, 1)
         localStorage.setItem('memos', JSON.stringify(this.memos))
         this.$_cancel()
