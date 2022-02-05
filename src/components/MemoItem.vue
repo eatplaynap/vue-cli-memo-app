@@ -77,10 +77,10 @@ export default {
       this.newMemo = this.memos[index].content
     },
     update() {
-      this.memos.splice(this.selectedIndex, 1, {
+      this.memos[this.selectedIndex] = {
         id: this.memos[this.selectedIndex].id,
         content: this.newMemo
-      })
+      }
       localStorage.setItem('memos', JSON.stringify(this.memos))
       this.$_cancel()
     }
