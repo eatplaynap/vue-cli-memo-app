@@ -1,5 +1,6 @@
-# vue-cli-memo-app
-This is a Memo App created with VueCLI.
+# create-vue-memo-app
+This is a Memo App created with create-vue.
+Originally, this app was created with Vue CLI but I wanted to try create-vue.
 You can create, update and delete your memo. 
 
 ## How it works
@@ -12,3 +13,9 @@ You can create, update and delete your memo.
 
 ### Deleting a memo
 [![Image from Gyazo](https://i.gyazo.com/17b8c6f576633e2bc2a78accf0cc39cf.gif)](https://gyazo.com/17b8c6f576633e2bc2a78accf0cc39cf)
+
+## How to run this app
+1. Clone this repository
+2. Run `npm install`
+3. Run `vite`
+4. Open `http://localhost:3000` in your browser
