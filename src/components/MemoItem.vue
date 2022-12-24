@@ -26,27 +26,27 @@
 </template>
 
 <script>
+import { ref, computed } from 'vue'
+
 export default {
-  data() {
+  setup() {
+    const memos = ref([])
+    const newMemo = ref(undefined)
+    const selectedIndex = ref(undefined)
+    const nextId = computed(() => (memos.value.length[memos.value.length - 1]?.id || 0) + 1)
+    const isDisplayingNewForm = computed(()=> selectedIndex.value === -1 )
+    const isDisplayingEditingForm = computed(()=> selectedIndex.value >= 0)
     return {
-      memos: [],
-      newMemo: undefined,
-      selectedIndex: undefined
+      memos,
+      newMemo,
+      selectedIndex,
+      nextId,
+      isDisplayingNewForm,
+      isDisplayingEditingForm
     }
   },
   mounted() {
     this.memos = JSON.parse(localStorage.getItem('memos')) || []
-  },
-  computed: {
-    nextId() {
-      return (this.memos[this.memos.length - 1]?.id || 0) + 1
-    },
-    isDisplayingNewForm() {
-      return this.selectedIndex === -1
-    },
-    isDisplayingEditingForm() {
-      return this.selectedIndex >= 0
-    }
   },
   methods: {
     add() {
