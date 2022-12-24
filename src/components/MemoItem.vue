@@ -33,10 +33,48 @@ export default {
     const memos = ref([])
     const newMemo = ref(undefined)
     const selectedIndex = ref(undefined)
+
     const nextId = computed(() => (memos.value.length[memos.value.length - 1]?.id || 0) + 1)
     const isDisplayingNewForm = computed(()=> selectedIndex.value === -1 )
     const isDisplayingEditingForm = computed(()=> selectedIndex.value >= 0)
+
     onMounted(() => { memos.value = JSON.parse(localStorage.getItem('memos')) || [] })
+
+    const add = () => {
+      selectedIndex.value = -1
+      newMemo.value = '新規メモ'
+    }
+    const create = () => {
+      memos.value.push({
+        id: nextId.value,
+        content: newMemo.value
+      })
+      localStorage.setItem('memos', JSON.stringify(memos.value))
+      $_cancel()
+    }
+    const $_cancel = () => {
+      newMemo.value = undefined
+      selectedIndex.value = undefined
+    }
+    const destroy = () => {
+      if (selectedIndex.value !== undefined) {
+        memos.value.splice(selectedIndex.value, 1)
+        localStorage.setItem('memos', JSON.stringify(memos.value))
+        $_cancel()
+      }
+    }
+    const edit = (index) => {
+      selectedIndex.value = index
+      newMemo.value = memos.value[index].content
+    }
+    const update = () => {
+      memos.value[selectedIndex.value] = {
+        id: memos.value[selectedIndex.value].id,
+        content: newMemo.value
+      }
+      localStorage.setItem('memos', JSON.stringify(memos.value))
+      $_cancel()
+    }
 
     return {
       memos,
@@ -44,45 +82,13 @@ export default {
       selectedIndex,
       nextId,
       isDisplayingNewForm,
-      isDisplayingEditingForm
+      isDisplayingEditingForm,
+      add,
+      create,
+      destroy,
+      edit,
+      update
     }
   },
-  methods: {
-    add() {
-      this.selectedIndex = -1
-      this.newMemo =  '新規メモ'
-    },
-    create() {
-      this.memos.push({
-        id: this.nextId,
-        content: this.newMemo
-      })
-      localStorage.setItem('memos', JSON.stringify(this.memos))
-      this.$_cancel()
-    },
-    $_cancel() {
-      this.newMemo = undefined
-      this.selectedIndex = undefined
-    },
-    destroy() {
-      if (this.selectedIndex !== undefined) {
-        this.memos.splice(this.selectedIndex, 1)
-        localStorage.setItem('memos', JSON.stringify(this.memos))
-        this.$_cancel()
-      }
-    },
-    edit(index) {
-      this.selectedIndex = index
-      this.newMemo = this.memos[index].content
-    },
-    update() {
-      this.memos[this.selectedIndex] = {
-        id: this.memos[this.selectedIndex].id,
-        content: this.newMemo
-      }
-      localStorage.setItem('memos', JSON.stringify(this.memos))
-      this.$_cancel()
-    }
-  }
 }
 </script>
