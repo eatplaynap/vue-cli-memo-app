@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 export default {
   setup() {
@@ -36,6 +36,8 @@ export default {
     const nextId = computed(() => (memos.value.length[memos.value.length - 1]?.id || 0) + 1)
     const isDisplayingNewForm = computed(()=> selectedIndex.value === -1 )
     const isDisplayingEditingForm = computed(()=> selectedIndex.value >= 0)
+    onMounted(() => { memos.value = JSON.parse(localStorage.getItem('memos')) || [] })
+
     return {
       memos,
       newMemo,
@@ -44,9 +46,6 @@ export default {
       isDisplayingNewForm,
       isDisplayingEditingForm
     }
-  },
-  mounted() {
-    this.memos = JSON.parse(localStorage.getItem('memos')) || []
   },
   methods: {
     add() {
